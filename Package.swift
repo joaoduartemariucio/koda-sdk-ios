@@ -1,26 +1,48 @@
 // swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+//  Created by João Vitor Duarte Mariucio on 10/03/26.
 
 import PackageDescription
 
 let package = Package(
-    name: "koda-sdk-ios",
+    name: "Koda",
+    platforms: [
+        .iOS(.v26), .macOS(.v26),
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "koda-sdk-ios",
-            targets: ["koda-sdk-ios"]
+            name: "Koda",
+            targets: ["Koda"]
         ),
+        .library(
+            name: "KodaFirebase",
+            targets: ["KodaFirebase"]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.0.0")
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "koda-sdk-ios"
+            name: "Koda",
+            path: "Sources/Koda",
+            swiftSettings: [
+                .enableUpcomingFeature("StrictConcurrency")
+            ]
+        ),
+        .target(
+            name: "KodaFirebase",
+            dependencies: [
+                "Koda",
+                .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk")
+            ],
+            path: "Sources/KodaFirebase"
         ),
         .testTarget(
-            name: "koda-sdk-iosTests",
-            dependencies: ["koda-sdk-ios"]
+            name: "KodaTests",
+            dependencies: ["Koda"],
+            path: "Tests/KodaTests"
         ),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
