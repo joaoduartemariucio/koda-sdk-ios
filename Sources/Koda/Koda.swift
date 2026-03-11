@@ -42,7 +42,7 @@ public actor Koda {
     ///   - name: The screen name.
     ///   - className: The screen class name. Defaults to `"View"`.
     ///   - parameters: Optional additional parameters.
-    public func logScreen(name: String, className: String = "View", parameters: [String: Any]? = nil) {
+    public func logScreen(name: String, className: String = "View", parameters: [String: any Sendable]? = nil) {
         for provider in providers {
             provider.logScreen(name: name, className: className, parameters: parameters)
         }
@@ -68,9 +68,7 @@ public actor Koda {
 
     /// Sets default parameters applied to all subsequent events.
     /// - Parameter parameters: The default parameters or `nil` to clear them.
-    public func setDefaultParameters(_ parameters: [String: Sendable]?) {
-        let adaptedParameters: [String: Any]? = parameters?.mapValues { $0 as Any }
-
+    public func setDefaultParameters(_ parameters: [String: any Sendable]?) {
         for provider in providers {
             provider.setDefaultParameters(adaptedParameters)
         }
