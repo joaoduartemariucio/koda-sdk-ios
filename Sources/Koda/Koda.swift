@@ -72,7 +72,7 @@ public actor Koda {
     /// - Parameter parameters: The default parameters or `nil` to clear them.
     public func setDefaultParameters(_ parameters: [String: any Sendable]?) {
         for provider in providers {
-            provider.setDefaultParameters(adaptedParameters)
+            provider.setDefaultParameters(parameters)
         }
     }
 
