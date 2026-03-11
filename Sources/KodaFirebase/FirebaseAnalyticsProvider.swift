@@ -9,7 +9,7 @@ import FirebaseAnalytics
 import Foundation
 import Koda
 
-public final class FirebaseAnalyticsProvider: AnalyticsProvider, @unchecked Sendable {
+public final class FirebaseAnalyticsProvider: AnalyticsProvider, Sendable {
 
     // MARK: - Lifecycle
 
