@@ -5,7 +5,9 @@
 //  Created by João Vitor Duarte Mariucio on 10/03/26.
 //
 
+#if canImport(AppTrackingTransparency)
 import AppTrackingTransparency
+#endif
 import Foundation
 
 /// Entry point for logging analytics events through registered providers.
@@ -89,10 +91,12 @@ public actor Koda {
         }
     }
 
+    #if canImport(AppTrackingTransparency)
     /// Requests App Tracking Transparency permission if the status is not determined.
     ///
     /// When the user responds, analytics collection is enabled only if authorization
     /// is granted. If the status is already determined, this call is a no-op.
+    @available(iOS 14, macCatalyst 14, tvOS 14, *)
     public func requestTrackingPermissionIfNeeded() async {
         guard ATTrackingManager.trackingAuthorizationStatus == .notDetermined else { return }
 
@@ -104,6 +108,7 @@ public actor Koda {
             provider.setCollectionEnabled(isEnabled)
         }
     }
+    #endif
 
     // MARK: - Private
 
