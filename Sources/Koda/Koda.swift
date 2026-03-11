@@ -68,9 +68,11 @@ public actor Koda {
 
     /// Sets default parameters applied to all subsequent events.
     /// - Parameter parameters: The default parameters or `nil` to clear them.
-    public func setDefaultParameters(_ parameters: [String: Any]?) {
+    public func setDefaultParameters(_ parameters: [String: Sendable]?) {
+        let adaptedParameters: [String: Any]? = parameters?.mapValues { $0 as Any }
+
         for provider in providers {
-            provider.setDefaultParameters(parameters)
+            provider.setDefaultParameters(adaptedParameters)
         }
     }
 
