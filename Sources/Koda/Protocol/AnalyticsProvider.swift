@@ -8,12 +8,12 @@
 public protocol AnalyticsProvider: Sendable {
     var name: String { get }
 
-    func logEvent(name: String, parameters: [String: Any]?)
+    func logEvent(name: String, parameters: [String: any Sendable]?)
     func setUserProperty(_ value: String?, forName name: String)
     func setUserId(_ userId: String?)
-    func logScreen(name: String, className: String, parameters: [String: Any]?)
+    func logScreen(name: String, className: String, parameters: [String: any Sendable]?)
 
-    func setDefaultParameters(_ parameters: [String: Any]?)
+    func setDefaultParameters(_ parameters: [String: any Sendable]?)
     func resetData()
     func setCollectionEnabled(_ isEnabled: Bool)
 }

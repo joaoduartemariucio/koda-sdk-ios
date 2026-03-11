@@ -9,7 +9,7 @@ import Foundation
 public struct KodaEvent {
 
     let name: String
-    let parameters: [String: Any]?
+    let parameters: [String: any Sendable]?
     let userId: String?
     let anonymousId: String
     let timestamp: Date

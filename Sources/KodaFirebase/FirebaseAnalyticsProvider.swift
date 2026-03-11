@@ -19,11 +19,11 @@ public final class FirebaseAnalyticsProvider: AnalyticsProvider, Sendable {
 
     public let name = "Firebase"
 
-    public func logEvent(name: String, parameters: [String: Any]?) {
-        Analytics.logEvent(name, parameters: parameters)
+    public func logEvent(name: String, parameters: [String: any Sendable]?) {
+        Analytics.logEvent(name, parameters: anyParameters(from: parameters))
     }
 
-    public func logScreen(name: String, className: String = "View", parameters: [String: Any]? = nil) {
+    public func logScreen(name: String, className: String = "View", parameters: [String: any Sendable]? = nil) {
         var payload: [String: Any] = [
             AnalyticsParameterScreenName: name,
             AnalyticsParameterScreenClass: className
@@ -46,8 +46,8 @@ public final class FirebaseAnalyticsProvider: AnalyticsProvider, Sendable {
         Analytics.setUserID(userId)
     }
 
-    public func setDefaultParameters(_ parameters: [String: Any]?) {
-        Analytics.setDefaultEventParameters(parameters)
+    public func setDefaultParameters(_ parameters: [String: any Sendable]?) {
+        Analytics.setDefaultEventParameters(anyParameters(from: parameters))
     }
 
     public func resetData() {
@@ -56,5 +56,11 @@ public final class FirebaseAnalyticsProvider: AnalyticsProvider, Sendable {
 
     public func setCollectionEnabled(_ isEnabled: Bool) {
         Analytics.setAnalyticsCollectionEnabled(isEnabled)
+    }
+
+    // MARK: - Private
+
+    private func anyParameters(from parameters: [String: any Sendable]?) -> [String: Any]? {
+        parameters.map { Dictionary(uniqueKeysWithValues: $0.map { ($0.key, $0.value as Any) }) }
     }
 }
