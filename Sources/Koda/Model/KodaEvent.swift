@@ -6,11 +6,25 @@
 //
 import Foundation
 
-public struct KodaEvent {
+public struct KodaEvent: Sendable {
 
-    let name: String
-    let parameters: [String: any Sendable]?
-    let userId: String?
-    let anonymousId: String
-    let timestamp: Date
+    public let name: String
+    public let parameters: [String: any Sendable]?
+    public let userId: String?
+    public let anonymousId: String
+    public let timestamp: Date
+
+    public init(
+        name: String,
+        parameters: [String: any Sendable]? = nil,
+        userId: String? = nil,
+        anonymousId: String,
+        timestamp: Date = Date()
+    ) {
+        self.name = name
+        self.parameters = parameters
+        self.userId = userId
+        self.anonymousId = anonymousId
+        self.timestamp = timestamp
+    }
 }
